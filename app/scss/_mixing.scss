@@ -1,0 +1,10 @@
+@mixin font-styl($font-size, $font-weight, $bck-color, $clr) {
+  background-color: $bck-color;
+  color:$clr;
+  font-size: $font-size;
+  font-weight: $font-weight;
+}
+@mixin hgt-wid($height, $width) {
+  height: $height;
+  width: $width;
+}

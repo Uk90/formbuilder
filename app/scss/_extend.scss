@@ -1,0 +1,15 @@
+.form-input-size {
+  height: 25px;
+  width: 100%;
+}
+.form-input-size-hover {
+  height: 25px;
+  width: 80%;
+}
+.grad {
+  background: $grad1-color;
+  background: -webkit-linear-gradient( $grad1-color, $grad2-color, $main-color);
+  background: -o-linear-gradient( $grad1-color, $grad2-color, $main-color);
+  background: -moz-linear-gradient( $grad1-color, $grad2-color, $main-color);
+  background: linear-gradient( $grad1-color, $grad2-color, $main-color);
+}

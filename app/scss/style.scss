@@ -1,0 +1,212 @@
+@import '_variable';
+@import '_extend';
+@import '_mixing';
+@import '_header';
+@import '_footer';
+
+body {
+  background-color: $background-color;
+  color: $font-color;
+  font-family: $font-family;
+  margin: 0;
+}
+
+.container{
+  display: inline;
+  .side-panel{
+    @include font-styl(18px, 800, $main-color, $font-color);
+    @extend .grad;
+    border-radius: 10px;
+    margin-left: 10px;
+    text-align: center;
+    float: left;
+    @include  hgt-wid(500px, 15%)
+    .form-input{
+      padding: 10px 0;
+      button{
+        @include font-styl(15px, 800, $main-color, $btn-color);
+        border: 2px solid $btn-border-color;
+        border-radius: 10px;
+        cursor: pointer;
+        @include  hgt-wid(30px, 85%)
+        margin: 5px;
+        padding: 5px;
+        i{
+          margin-right: 5px;
+        }
+        &:focus{
+          outline: none;
+        }
+      }
+      input[type='text']{
+        border-radius: 10px;
+        margin-bottom: 10px;
+        padding-left: 10px;
+        @include  hgt-wid(25px, 80%)
+        &:focus{
+          outline:none;
+        }
+      }
+    }
+    h3{
+      border-bottom: 1px solid $border-color;
+      color: $main-color;
+      font-style: italic;
+      padding-bottom: 10px;
+      margin-top: 11px;
+    }
+  }
+  .content{
+    background-color: $main-color;
+    border-radius: 10px;
+    float:left;
+    @include  hgt-wid(500px, 82%)
+    overflow: auto;
+    margin-left: 15px;
+    margin-right: 10px;
+    .dynamic-form{
+      .form-desc{
+        border: none;
+        border-bottom: 1px solid $border-color;
+        display: none;
+        margin: 20px 25%;
+        @include  hgt-wid(30px, 50%)
+        &:focus{
+          outline: none;
+        }
+      }
+      .form-fields{
+        padding: 10px;
+        margin: 0 auto;
+        width: 60%;
+        textarea{
+          border-radius: 8px;
+           @extend .form-input-size;
+        }
+        label{
+          font-weight: 700;
+          margin:5px 5px 20px 0;
+          width: 20%;
+          display: inline-block;
+        }
+        .edit-form-fields{
+          background-color: $btn-submit-color;
+          display: none;
+          border: none;
+          color:$main-color;
+          float: right;
+          margin: 0 10px 0 8px;
+          padding: 5px 7px;
+        }
+        .form-field-button{
+          border: none;
+          border-radius: 5px;
+          padding: 10px 10px;
+          min-width: 100px;
+        }
+        select{
+          @extend .form-input-size;
+        }
+        input[type='text']{
+          border-radius: 8px;
+          @extend .form-input-size;
+        }
+        &:hover{
+          border: 2px dashed #bfb9b9;
+          .edit-form-fields{
+            display: block;
+          }
+          input[type='text'],textarea,select{
+            @extend .form-input-size-hover;
+          }
+        }
+      }
+    }
+
+    .btn-submit{
+      text-align: right;
+      margin-top: 20px;
+      button{
+        background-color: $btn-submit-color;
+        border:none;
+        color:$main-color;
+        display: none;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-size: 18px;
+        margin: 10px 20px;
+        i{
+          margin-right: 5px;
+        }
+      }
+    }
+    .content-heading{
+      @include font-styl(22px, 800,$grad1-color, $main-color);
+      border-radius: 10px;
+      box-shadow: 10px 5px 10px 0px #6e9491;
+      font-style: italic;
+      padding:10px 10px;
+      text-align: center;
+    }
+  }
+  .result{
+    float:left;
+    width: 100%;
+    padding:5px 0;
+    margin: 20px 0 0 0;
+    text-align: center;
+    .result-heading{
+      @include font-styl(22px, 800, $grad2-color, $main-color);
+      border-radius: 10px;
+      font-style: italic;
+      padding:10px 10px;
+    }
+    textarea{
+        font-size:14px;
+        font-weight:600;
+        margin-top: 20px;
+    }
+  }
+
+}
+
+.modal {
+    background-color: rgba(0,0,0,0.4);
+    display: none;
+    @include  hgt-wid(100%, 100%);
+    left: 0;
+    overflow: auto;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    .modal-content {
+        background-color: $main-color;
+        border: 1px solid $border-color;
+        margin: 15% auto;
+        text-align: center;
+        width: 40%;
+        .model-form-fields{
+          margin-top: 10px;
+          label{
+            display: inline-block;;
+            margin-right: 20px;
+            text-align: left;
+            width: 150px;
+          }
+        }
+        button{
+          @include font-styl(18px, 500, $btn-submit-color, $main-color);
+          border:none;
+          margin: 10px 0;
+          padding: 10px 10px;
+          i{
+            margin-right: 5px;
+          }
+
+        }
+        .modal-Heading{
+          @include font-styl(20px, 500, $model-hd-color, $main-color);
+          padding: 10px 0;
+        }
+    }
+}

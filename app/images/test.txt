@@ -1,0 +1,42 @@
+{
+    "formName": "Form name",
+    "formDescription": "description",
+    "fieldset": [
+        {
+            "type": "text",
+            "id": "id1",
+            "name": "name1",
+            "class": "class1",
+            "placeholder": "Placeholder",
+            "labelName": "Label Name",
+            "options": [],
+            "colNo": "",
+            "rowNo": "",
+            "radioLabelName": ""
+        },
+        {
+            "type": "textarea",
+            "id": "",
+            "name": "",
+            "class": "",
+            "placeholder": "",
+            "labelName": "",
+            "options": [],
+            "colNo": 20,
+            "rowNo": 2,
+            "radioLabelName": ""
+        },
+        {
+            "type": "checkbox",
+            "id": "",
+            "name": "",
+            "class": "",
+            "placeholder": "",
+            "labelName": "",
+            "options": [],
+            "colNo": "",
+            "rowNo": "",
+            "radioLabelName": ""
+        }
+    ]
+}
