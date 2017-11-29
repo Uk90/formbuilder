@@ -50,6 +50,12 @@ body {
         padding-bottom: 5px;
         font-size: 18px;
         margin: 20px 20px; }
+    .container .content .content-heading {
+      border-bottom: 1px solid #000;
+      font-style: italic;
+      font-weight: 700;
+      padding: 10px 10px;
+      text-align: center; }
   .container .result {
     float: left;
     height: 100%;
@@ -57,7 +63,10 @@ body {
     padding: 10px 10px;
     text-align: center; }
     .container .result .result-heading {
-      font-weight: 700; }
+      border-bottom: 1px solid #000;
+      font-style: italic;
+      font-weight: 700;
+      padding: 10px 10px; }
 
 .modal {
   background-color: rgba(0, 0, 0, 0.4);

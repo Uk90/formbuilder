@@ -16,6 +16,11 @@ var div_content = divElm.cloneNode(false);
 div_content.setAttribute("class", "content");
 div_container.appendChild(div_content);
 
+var div_content_heading = divElm.cloneNode(false);
+div_content_heading.setAttribute("class", "content-heading");
+div_content_heading.innerHTML = 'Form Fields';
+div_content.appendChild(div_content_heading);
+
 var div_result = divElm.cloneNode(false);
 div_result.setAttribute("class", "result");
 div_container.appendChild(div_result);
