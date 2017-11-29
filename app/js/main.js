@@ -91,8 +91,7 @@ div_modal_Heading.innerHTML = 'Edit Form';
 div_modal_content.appendChild(div_modal_Heading);
 
 var label_default_name = document.createElement("label");
-var label_default_value = document.createTextNode("Name:");
-label_default_name.appendChild(label_default_value);
+
 
 var createFormElement = function(type) {
   try {
@@ -104,6 +103,8 @@ var createFormElement = function(type) {
     div_form_fields.setAttribute("class", "form-fields");
 
     var label_name = label_default_name.cloneNode(true);
+    var label_default_value = document.createTextNode(type.charAt(0).toUpperCase() + type.slice(1)+' :');
+    label_name.appendChild(label_default_value);
     div_form_fields.appendChild(label_name);
 
     if (element === 'text' || element === 'checkbox') {
@@ -111,6 +112,8 @@ var createFormElement = function(type) {
       input_field.type = element;
       input_field.setAttribute("data-type", element);
       div_form_fields.appendChild(input_field);
+
+
 
     } else if (element === 'textarea') {
       input_field = textareaElm.cloneNode(false);
@@ -203,11 +206,24 @@ var constructTextForm = function(type, activeEvent) {
       var optionValue = '';
       var classvalue = field.className;
 
+      if(type == 'select') {
+        var options = field.options;
+
+        for (var k = 0; k < field.options.length; k++) {
+          if (options[k].innerText !== 'select value') {
+            if(k>0){
+               optionValue += ',';
+            }
+            optionValue += options[k].innerText;
+          }
+        }
+      }
       if(type == 'radio'){
         labelValue  = field.dataset.radioLabelName || '';
         labelValue1 = field.dataset.labelName || '';
         labelValue2 = field2.dataset.labelName || '';
       }
+      if (type !== 'select')
       modalFormCreate('Placeholder :', 'placeholderValue',placeHolderValue)
       modalFormCreate('Label Name :', 'labelValue', labelValue)
       modalFormCreate('Class :', 'classValue', classvalue)
@@ -275,6 +291,7 @@ var formOverRide = function(radNo) {
     field = radLabel1.firstChild;
   }
   var fieldType = field.dataset.type;
+  if (fieldType !== 'select')
   var placeholderValue = document.getElementById('placeholderValue').value;
   var labelValue = document.getElementById('labelValue').value;
   var classValue = document.getElementById('classValue').value;
@@ -336,7 +353,9 @@ var formOverRide = function(radNo) {
   if (fieldType === 'select') {
     var option = document.getElementById('option').value;
     var aOption = option.split(",");
+    field.innerHTML = '';
     for (var i = 0; i < aOption.length; i++) {
+      // console.log(aOption[i]);
       var option = document.createElement("option");
       option.value = aOption[i];
       option.text = aOption[i];
@@ -393,7 +412,6 @@ function objectifyForm(formArray) {
             'rowNo': '',
             'radioLabelName': ''
           }
-          console.log(formArray[i]);
           formDetails.type = formArray[i].type || '';
           formDetails.id = formArray[i].id || '';
           formDetails.name = formArray[i].name || '';
@@ -417,8 +435,19 @@ function objectifyForm(formArray) {
       }
       var result = JSON.stringify(returnArray);
       div_result_content.innerHTML = result;;
+      download('test.txt', returnArray);
       return returnArray;
   } catch (e) {
     console.log(e);
   }
+}
+
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
 }

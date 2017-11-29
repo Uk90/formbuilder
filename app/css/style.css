@@ -8,7 +8,7 @@ body {
   height: 100%;
   width: 100%; }
   .container .side-panel {
-    background-color: #55a8fd;
+    background-color: #0c3865;
     border: 1px solid #000000;
     float: left;
     height: 100%;
@@ -20,28 +20,39 @@ body {
         background-color: #ffffff;
         border: none;
         color: #000000;
+        cursor: pointer;
         height: 30px;
         margin-top: 5px;
         width: 100%; }
   .container .content {
-    border: 1px solid #55a8fd;
     float: left;
     height: 100%;
     width: 50%; }
     .container .content .form-fields {
-      margin-top: 10px;
+      margin-top: 20px;
       margin-left: 50px; }
       .container .content .form-fields textarea {
         vertical-align: top; }
       .container .content .form-fields label {
-        margin-right: 10px; }
+        font-weight: 700;
+        margin-right: 10px;
+        min-width: 15%;
+        display: inline-block; }
       .container .content .form-fields button {
         background-color: #55a8fd;
         border: none;
         color: #ffffff;
-        margin-left: 8px; }
+        margin-left: 8px;
+        float: right;
+        margin-right: 50px;
+        width: 50px; }
+      .container .content .form-fields select {
+        height: 20px;
+        width: 175px; }
     .container .content .btn-submit {
-      text-align: right; }
+      border-top: 1px solid #000;
+      text-align: right;
+      margin-top: 20px; }
       .container .content .btn-submit button {
         background-color: #525874;
         border: none;
@@ -49,7 +60,7 @@ body {
         padding-top: 5px;
         padding-bottom: 5px;
         font-size: 18px;
-        margin: 20px 20px; }
+        margin: 10px 20px; }
     .container .content .content-heading {
       border-bottom: 1px solid #000;
       font-style: italic;

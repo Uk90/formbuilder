@@ -11,7 +11,7 @@ body {
   height:100%;
   width: 100%;
   .side-panel{
-    background-color: #55a8fd;
+    background-color: #0c3865;
     border: 1px solid #000000;
     float:left;
     height:100%;
@@ -24,6 +24,7 @@ body {
         background-color: #ffffff;
         border: none;
         color:#000000;
+        cursor: pointer;
         height: 30px;
         margin-top: 5px;
         width:100%;
@@ -32,29 +33,41 @@ body {
   }
 
   .content{
-    border: 1px solid #55a8fd;
+    // border: 1px solid #55a8fd;
     float:left;
     height:100%;
     width: 50%;
     // display: inline;
     .form-fields{
-      margin-top: 10px;
+      margin-top: 20px;
       margin-left: 50px;
       textarea{
         vertical-align: top;
       }
       label{
+        font-weight: 700;
         margin-right: 10px;
+        min-width: 15%;
+        display: inline-block;
       }
       button{
         background-color: #55a8fd;
         border: none;
         color:#ffffff;
         margin-left: 8px;
+        float: right;
+        margin-right: 50px;
+        width: 50px;
+      }
+      select{
+        height: 20px;
+        width: 175px;
       }
     }
     .btn-submit{
+      border-top: 1px solid #000;
       text-align: right;
+      margin-top: 20px;
       button{
         background-color: #525874;
         border:none;
@@ -62,7 +75,7 @@ body {
         padding-top: 5px;
         padding-bottom: 5px;
         font-size: 18px;
-        margin: 20px 20px;
+        margin: 10px 20px;
       }
     }
     .content-heading{
