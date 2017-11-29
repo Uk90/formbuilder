@@ -139,6 +139,7 @@ var createFormElement = function(type) {
       div_form_fields.appendChild(radio_label2);
       radio_label2.appendChild(input_field2);
     }
+
     var edit_button = btnElm.cloneNode(false);
     var edit_label = document.createTextNode("Edit");
     edit_button.setAttribute("class", "edit-form-input");
@@ -186,24 +187,45 @@ function deleteFields() {
 }
 var constructTextForm = function(type, activeEvent) {
   try {
+      var field = activeEvent.previousSibling;
+      if(type == 'radio'){
+        var label1 = field;
+        field = label1.firstChild;
+        var label2 = label1.previousSibling;
+        field2 = label2.firstChild;
+      }
+      var placeHolderValue = field.placeholder || '';
+      var labelValue  = field.dataset.labelName || '';
+      var nameValue  = field.name || '';
+      var idValue  = field.id || '';
+      var colsValue  = field.cols || '';
+      var rowsValue  = field.rows || '';
+      var optionValue = '';
+      var classvalue = field.className;
 
-      modalFormCreate('Placeholder :', 'placeholderValue')
-      modalFormCreate('Label Name :', 'labelValue')
+      if(type == 'radio'){
+        labelValue  = field.dataset.radioLabelName || '';
+        labelValue1 = field.dataset.labelName || '';
+        labelValue2 = field2.dataset.labelName || '';
+      }
+      modalFormCreate('Placeholder :', 'placeholderValue',placeHolderValue)
+      modalFormCreate('Label Name :', 'labelValue', labelValue)
+      modalFormCreate('Class :', 'classValue', classvalue)
       if (type !== 'radio')
-        modalFormCreate('ID :', 'idValue')
-      modalFormCreate('Name :', 'nameValue')
+        modalFormCreate('ID :', 'idValue',idValue)
+      modalFormCreate('Name :', 'nameValue',nameValue)
 
       if (type === 'textarea') {
-        modalFormCreate('Col No:', 'colNo')
-        modalFormCreate('Row No:', 'rowNo')
+        modalFormCreate('Col No:', 'colNo',colsValue)
+        modalFormCreate('Row No:', 'rowNo',rowsValue)
       }
 
       if (type === 'radio') {
-        modalFormCreate('Radio Label 1:', 'radLable1')
-        modalFormCreate('Radio Label 2:', 'radLable2')
+        modalFormCreate('Radio Label 1:', 'radLable1', labelValue1)
+        modalFormCreate('Radio Label 2:', 'radLable2', labelValue2)
       }
       if (type === 'select') {
-        modalFormCreate('Options:', 'option')
+        modalFormCreate('Options:', 'option',optionValue)
 
       }
       var modal_div_button = divElm.cloneNode(false);
@@ -216,12 +238,14 @@ var constructTextForm = function(type, activeEvent) {
       var randomNo = Math.floor((Math.random() * 50000) + 1);
       modal_button.setAttribute("onclick", "formOverRide(" + randomNo + ")");
       activeEvent.setAttribute("id", randomNo);
+
+
   } catch (e) {
     console.log(e);
   }
 }
 
-var modalFormCreate = function(labelName, inputId) {
+var modalFormCreate = function(labelName, inputId, value) {
   try {
       var modal_div_placeholder = divElm.cloneNode(false);
       modal_div_placeholder.setAttribute("class", "model-form-fields");
@@ -235,6 +259,7 @@ var modalFormCreate = function(labelName, inputId) {
       var placeholder_input_field = inputElm.cloneNode(false);
       placeholder_input_field.type = 'text';
       placeholder_input_field.id = inputId;
+      placeholder_input_field.value = value;
       modal_div_placeholder.appendChild(placeholder_input_field);
   } catch (e) {
     console.log(e);
@@ -252,6 +277,7 @@ var formOverRide = function(radNo) {
   var fieldType = field.dataset.type;
   var placeholderValue = document.getElementById('placeholderValue').value;
   var labelValue = document.getElementById('labelValue').value;
+  var classValue = document.getElementById('classValue').value;
   if (fieldType !== 'radio')
     var idValue = document.getElementById('idValue').value;
   if (fieldType == 'radio') {
@@ -267,6 +293,8 @@ var formOverRide = function(radNo) {
     var label = field.previousSibling;
   }
   var button = buttonAct;
+  if(classValue)
+    field.setAttribute("class", classValue);
   if (placeholderValue)
     field.setAttribute("placeholder", placeholderValue);
   if (idValue)
@@ -275,6 +303,7 @@ var formOverRide = function(radNo) {
     field.setAttribute("name", nameValue);
   if (fieldType == 'radio') {
     field2.setAttribute("name", nameValue);
+    field2.setAttribute("class", classValue);
     field.setAttribute("id", '');
     field2.setAttribute("id", '');
   }
@@ -350,11 +379,13 @@ function objectifyForm(formArray) {
       var returnArray = [];
       console.log(formArray.length);
       for (var i = 0; i < formArray.length; i++) {
+
         if (formArray[i]['classList'][0] !== "edit-form-input") {
           var formDetails = {
             'type': '',
             'id': '',
             'name': '',
+            'class': '',
             'placeholder': '',
             'labelName': '',
             'options': [],
@@ -362,14 +393,16 @@ function objectifyForm(formArray) {
             'rowNo': '',
             'radioLabelName': ''
           }
+          console.log(formArray[i]);
           formDetails.type = formArray[i].type || '';
           formDetails.id = formArray[i].id || '';
           formDetails.name = formArray[i].name || '';
+          formDetails.class = formArray[i].className || '';
           formDetails.placeholder = formArray[i].placeholder || '';
           formDetails.labelName = formArray[i].dataset.labelName || '';
           formDetails.colNo = formArray[i].cols || '';
           formDetails.rowNo = formArray[i].rows || '';
-          formDetails.radioLabelName = formArray[i].dataset.RadioLabelName || '';
+          formDetails.radioLabelName = formArray[i].dataset.radioLabelName || '';
           if (formArray[i].type == 'select-one') {
             var options = formArray[i].options;
             var optLenth = options.length;
