@@ -1,5 +1,8 @@
 var divElm = document.createElement("div");
 var btnElm = document.createElement("button");
+var inputElm = document.createElement("input");
+var textareaElm = document.createElement("textarea");
+var selectElm = document.createElement("select");
 
 var div_container = divElm.cloneNode(false);
 div_container.setAttribute("class", "container");
@@ -51,13 +54,17 @@ div_button.appendChild(submit_form_button);
 /////////////////////////////////sidePanalFields//////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
 var sidePanalFields = function(label, attrfn, id) {
-  var select_button = btnElm.cloneNode(false);
-  var select_label = document.createTextNode(label);
-  select_button.setAttribute("class", "create_form_element");
-  submit_form_button.setAttribute("type", "button");
-  select_button.setAttribute("onclick", "createFormElement('" + attrfn + "')");
-  select_button.appendChild(select_label);
-  div_form_input.appendChild(select_button);
+  try {
+    var select_button = btnElm.cloneNode(false);
+    var select_label = document.createTextNode(label);
+    select_button.setAttribute("class", "create_form_element");
+    submit_form_button.setAttribute("type", "button");
+    select_button.setAttribute("onclick", "createFormElement('" + attrfn + "')");
+    select_button.appendChild(select_label);
+    div_form_input.appendChild(select_button);
+  } catch (e) {
+    console.log(e);
+  }
 }
 sidePanalFields('Text', 'text');
 sidePanalFields('Text Area', 'textarea');
@@ -78,135 +85,159 @@ div_modal_Heading.setAttribute("class", "modal-Heading");
 div_modal_Heading.innerHTML = 'Edit Form';
 div_modal_content.appendChild(div_modal_Heading);
 
+var label_default_name = document.createElement("label");
+var label_default_value = document.createTextNode("Name:");
+label_default_name.appendChild(label_default_value);
+
 var createFormElement = function(type) {
-  var element = type;
-  var input_field = '';
-  var div_form_fields = divElm.cloneNode(false);
-  div_form.insertBefore(div_form_fields, div_button);
-  div_form_fields.setAttribute("class", "form-fields");
+  try {
+    var element = type;
+    var input_field = '';
 
-  var label_name = document.createElement("label");
-  var label = document.createTextNode("Name:");
-  label_name.appendChild(label);
-  div_form_fields.appendChild(label_name);
-  if (element === 'text' || element === 'checkbox') {
-    input_field = document.createElement("input");
-    input_field.type = element;
-    input_field.setAttribute("data-type", element);
-    div_form_fields.appendChild(input_field);
+    var div_form_fields = divElm.cloneNode(false);
+    div_form.insertBefore(div_form_fields, div_button);
+    div_form_fields.setAttribute("class", "form-fields");
 
-  } else if (element === 'textarea') {
-    input_field = document.createElement("textarea");
-    input_field.setAttribute("data-type", element);
-    div_form_fields.appendChild(input_field);
-  } else if (element === 'select') {
-    input_field = document.createElement("select");
-    input_field.setAttribute("data-type", element);
-    div_form_fields.appendChild(input_field);
-    var option_field = document.createElement("option");
-    option_field.value = '';
-    option_field.text = 'select value';
-    input_field.appendChild(option_field);
-  } else if (element === 'radio') {
-    var radio_label = document.createElement("label");
-    input_field = document.createElement("input");
-    input_field.type = element;
-    input_field.setAttribute("data-type", element);
-    div_form_fields.appendChild(radio_label);
-    radio_label.appendChild(input_field);
+    var label_name = label_default_name.cloneNode(true);
+    div_form_fields.appendChild(label_name);
 
-    var radio_label2 = document.createElement("label");
-    var input_field2 = document.createElement("input");
-    input_field2.type = element;
-    input_field2.setAttribute("data-type", "radio");
-    div_form_fields.appendChild(radio_label2);
-    radio_label2.appendChild(input_field2);
+    if (element === 'text' || element === 'checkbox') {
+      input_field = inputElm.cloneNode(false);
+      input_field.type = element;
+      input_field.setAttribute("data-type", element);
+      div_form_fields.appendChild(input_field);
+
+    } else if (element === 'textarea') {
+      input_field = textareaElm.cloneNode(false);
+      input_field.setAttribute("data-type", element);
+      div_form_fields.appendChild(input_field);
+    } else if (element === 'select') {
+      input_field = selectElm.cloneNode(false);
+      input_field.setAttribute("data-type", element);
+      div_form_fields.appendChild(input_field);
+      var option_field = document.createElement("option");
+      option_field.value = '';
+      option_field.text = 'select value';
+      input_field.appendChild(option_field);
+    } else if (element === 'radio') {
+      var radio_label = document.createElement("label");
+      input_field = inputElm.cloneNode(false);
+      input_field.type = element;
+      input_field.setAttribute("data-type", element);
+      div_form_fields.appendChild(radio_label);
+      radio_label.appendChild(input_field);
+
+      var radio_label2 = document.createElement("label");
+      var input_field2 = inputElm.cloneNode(false);
+      input_field2.type = element;
+      input_field2.setAttribute("data-type", "radio");
+      div_form_fields.appendChild(radio_label2);
+      radio_label2.appendChild(input_field2);
+    }
+    var edit_button = btnElm.cloneNode(false);
+    var edit_label = document.createTextNode("Edit");
+    edit_button.setAttribute("class", "edit-form-input");
+    edit_button.setAttribute("type", "button");
+    edit_button.setAttribute("onclick", "editFormAttr()");
+    edit_button.appendChild(edit_label);
+    div_form_fields.appendChild(edit_button);
+
+    var delete_button = btnElm.cloneNode(false);
+    var delete_label = document.createTextNode("Delete");
+    delete_button.setAttribute("class", "edit-form-input");
+    delete_button.setAttribute("type", "button");
+    delete_button.setAttribute("onclick", "deleteFields()");
+    delete_button.appendChild(delete_label);
+    div_form_fields.appendChild(delete_button);
+
+  } catch (e) {
+    console.log(e);
   }
-  var edit_button = btnElm.cloneNode(false);
-  var edit_label = document.createTextNode("Edit");
-  edit_button.setAttribute("class", "edit-form-input");
-  edit_button.setAttribute("type", "button");
-  edit_button.setAttribute("onclick", "editFormAttr()");
-  edit_button.appendChild(edit_label);
-  div_form_fields.appendChild(edit_button);
-
-  var delete_button = btnElm.cloneNode(false);
-  var delete_label = document.createTextNode("Delete");
-  delete_button.setAttribute("class", "edit-form-input");
-  delete_button.setAttribute("type", "button");
-  delete_button.setAttribute("onclick", "deleteFields()");
-  delete_button.appendChild(delete_label);
-  div_form_fields.appendChild(delete_button);
-
 }
 
 
 function editFormAttr() {
-  var activeEvent = document.activeElement;
-  var field = activeEvent.previousSibling;
-  if (field.localName === 'label') {
-    field = field.firstChild;
+  try {
+    var activeEvent = document.activeElement;
+    var field = activeEvent.previousSibling;
+    if (field.localName === 'label') {
+      field = field.firstChild;
+    }
+    var div_modal = document.getElementById('myModal');
+    div_modal.style.display = "block";
+    constructTextForm(field.dataset.type, activeEvent)
+  } catch (e) {
+    console.log(e);
   }
-  var div_modal = document.getElementById('myModal');
-  div_modal.style.display = "block";
-  constructTextForm(field.dataset.type, activeEvent)
 }
 
 function deleteFields() {
-  var activeEvent = document.activeElement;
-  activeEvent.parentNode.remove();
+  try {
+    var activeEvent = document.activeElement;
+    activeEvent.parentNode.remove();
+  } catch (e) {
+    console.log(e);
+  }
 }
 var constructTextForm = function(type, activeEvent) {
+  try {
 
-  modalFormCreate('Placeholder :', 'placeholderValue')
-  modalFormCreate('Label Name :', 'labelValue')
-  if (type !== 'radio')
-    modalFormCreate('ID :', 'idValue')
-  modalFormCreate('Name :', 'nameValue')
+      modalFormCreate('Placeholder :', 'placeholderValue')
+      modalFormCreate('Label Name :', 'labelValue')
+      if (type !== 'radio')
+        modalFormCreate('ID :', 'idValue')
+      modalFormCreate('Name :', 'nameValue')
 
-  if (type === 'textarea') {
-    modalFormCreate('Col No:', 'colNo')
-    modalFormCreate('Row No:', 'rowNo')
+      if (type === 'textarea') {
+        modalFormCreate('Col No:', 'colNo')
+        modalFormCreate('Row No:', 'rowNo')
+      }
+
+      if (type === 'radio') {
+        modalFormCreate('Radio Label 1:', 'radLable1')
+        modalFormCreate('Radio Label 2:', 'radLable2')
+      }
+      if (type === 'select') {
+        modalFormCreate('Options:', 'option')
+
+      }
+      var modal_div_button = divElm.cloneNode(false);
+      div_modal_content.appendChild(modal_div_button);
+      var modal_button = btnElm.cloneNode(false);
+      var button_label = document.createTextNode("Submit");
+      modal_button.appendChild(button_label);
+      modal_button.setAttribute("type", "button");
+      modal_div_button.appendChild(modal_button);
+      var randomNo = Math.floor((Math.random() * 50000) + 1);
+      modal_button.setAttribute("onclick", "formOverRide(" + randomNo + ")");
+      activeEvent.setAttribute("id", randomNo);
+  } catch (e) {
+    console.log(e);
   }
-
-  if (type === 'radio') {
-    modalFormCreate('Radio Label 1:', 'radLable1')
-    modalFormCreate('Radio Label 2:', 'radLable2')
-  }
-  if (type === 'select') {
-    modalFormCreate('Options:', 'option')
-
-  }
-  var modal_div_button = divElm.cloneNode(false);
-  div_modal_content.appendChild(modal_div_button);
-  var modal_button = btnElm.cloneNode(false);
-  var button_label = document.createTextNode("Submit");
-  modal_button.appendChild(button_label);
-  modal_button.setAttribute("type", "button");
-  modal_div_button.appendChild(modal_button);
-  var randomNo = Math.floor((Math.random() * 50000) + 1);
-  modal_button.setAttribute("onclick", "formOverRide(" + randomNo + ")");
-  activeEvent.setAttribute("id", randomNo);
 }
 
 var modalFormCreate = function(labelName, inputId) {
+  try {
+      var modal_div_placeholder = divElm.cloneNode(false);
+      modal_div_placeholder.setAttribute("class", "model-form-fields");
+      div_modal_content.appendChild(modal_div_placeholder);
 
-  var modal_div_placeholder = divElm.cloneNode(false);
-  modal_div_placeholder.setAttribute("class", "model-form-fields");
-  div_modal_content.appendChild(modal_div_placeholder);
+      var placeholder_label_name = document.createElement("label");
+      var placeholder_label = document.createTextNode(labelName);
+      placeholder_label_name.appendChild(placeholder_label);
+      modal_div_placeholder.appendChild(placeholder_label_name);
 
-  var placeholder_label_name = document.createElement("label");
-  var placeholder_label = document.createTextNode(labelName);
-  placeholder_label_name.appendChild(placeholder_label);
-  modal_div_placeholder.appendChild(placeholder_label_name);
-
-  var placeholder_input_field = document.createElement("input");
-  placeholder_input_field.type = 'text';
-  placeholder_input_field.id = inputId;
-  modal_div_placeholder.appendChild(placeholder_input_field);
+      var placeholder_input_field = inputElm.cloneNode(false);
+      placeholder_input_field.type = 'text';
+      placeholder_input_field.id = inputId;
+      modal_div_placeholder.appendChild(placeholder_input_field);
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 var formOverRide = function(radNo) {
+  try {
   var buttonAct = document.getElementById(radNo);
   var field = buttonAct.previousSibling;
   if (field.localName === 'label') {
@@ -289,53 +320,67 @@ var formOverRide = function(radNo) {
   }
   div_modal.style.display = "none";
   div_modal_content.innerHTML = '';
+
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 window.onclick = function(event) {
-  var div_modal = document.getElementById('myModal');
-  if (event.target == div_modal) {
-    div_modal.style.display = "none";
-    div_modal_content.innerHTML = '';
+  try {
+    var div_modal = document.getElementById('myModal');
+    if (event.target == div_modal) {
+      div_modal.style.display = "none";
+      div_modal_content.innerHTML = '';
+    }
+  } catch (e) {
+    console.log(e);
   }
 }
 
-function objectifyForm(formArray) { //serialize data function
-  var returnArray = [];
-  for (var i = 0; i < formArray.length; i++) {
-    if (formArray[i]['classList'][0] !== "edit-form-input") {
-      var formDetails = {
-        'type': '',
-        'id': '',
-        'name': '',
-        'placeholder': '',
-        'dataLabelName': '',
-        'options': [],
-        'colNo': '',
-        'rowNo': '',
-        'dataRadioLabelName': ''
-      }
-      formDetails.type = formArray[i].type || '';
-      formDetails.id = formArray[i].id || '';
-      formDetails.name = formArray[i].name || '';
-      formDetails.placeholder = formArray[i].placeholder || '';
-      formDetails.dataLabelName = formArray[i].dataset.labelName || '';
-      formDetails.colNo = formArray[i].cols || '';
-      formDetails.rowNo = formArray[i].rows || '';
-      formDetails.radioLabelName = formArray[i].dataset.RadioLabelName || '';
-      if (formArray[i].type == 'select-one') {
-        var options = formArray[i].options;
-        for (var i = 0; i < options.length; i++) {
-          console.log(options[i].innerText);
-          if (options[i].innerText !== 'select value') {
-            formDetails.options.push(options[i].innerText)
+function objectifyForm(formArray) {
+  try {
+
+       //serialize data function
+      var returnArray = [];
+      console.log(formArray.length);
+      for (var i = 0; i < formArray.length; i++) {
+        if (formArray[i]['classList'][0] !== "edit-form-input") {
+          var formDetails = {
+            'type': '',
+            'id': '',
+            'name': '',
+            'placeholder': '',
+            'labelName': '',
+            'options': [],
+            'colNo': '',
+            'rowNo': '',
+            'radioLabelName': ''
           }
+          formDetails.type = formArray[i].type || '';
+          formDetails.id = formArray[i].id || '';
+          formDetails.name = formArray[i].name || '';
+          formDetails.placeholder = formArray[i].placeholder || '';
+          formDetails.labelName = formArray[i].dataset.labelName || '';
+          formDetails.colNo = formArray[i].cols || '';
+          formDetails.rowNo = formArray[i].rows || '';
+          formDetails.radioLabelName = formArray[i].dataset.RadioLabelName || '';
+          if (formArray[i].type == 'select-one') {
+            var options = formArray[i].options;
+            var optLenth = options.length;
+            for (var j = 0; j < optLenth; j++) {
+              if (options[j].innerText !== 'select value') {
+                formDetails.options.push(options[j].innerText)
+              }
+            }
+          }
+          returnArray.push(formDetails);
         }
       }
-      returnArray.push(formDetails);
-    }
-
+      var result = JSON.stringify(returnArray);
+      div_result_content.innerHTML = result;;
+      return returnArray;
+  } catch (e) {
+    console.log(e);
   }
-  var result = JSON.stringify(returnArray);
-  div_result_content.innerHTML = result;;
-  return returnArray;
 }
