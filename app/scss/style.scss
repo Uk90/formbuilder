@@ -7,34 +7,34 @@ body {
 }
 
 .container{
-  width: 100%;
-  height:100%;
   display: inline;
+  height:100%;
+  width: 100%;
   .side-panel{
-    width: 10%;
-    height:100%;
+    background-color: #55a8fd;
     border: 1px solid #000000;
     float:left;
-    background-color: #55a8fd;
+    height:100%;
+    width: 10%;
     .form-input{
-      padding-top: 100px;
       padding-bottom: 100px;
+      padding-top: 100px;
       button{
-        margin-top: 5px;
         background-color: #ffffff;
-        color:#000000;
-        width:100%;
-        height: 30px;
         border: none;
+        color:#000000;
+        height: 30px;
+        margin-top: 5px;
+        width:100%;
       }
     }
   }
 
   .content{
-    width: 89%;
-    height:100%;
     border: 1px solid #55a8fd;
-    float:right;
+    float:left;
+    height:100%;
+    width: 50%;
     // display: inline;
     .form-fields{
       margin-top: 10px;
@@ -42,50 +42,89 @@ body {
       textarea{
         vertical-align: top;
       }
-      button{
-        margin-left: 8px;
-        background-color: #55a8fd;
-        color:#ffffff;
-        border: none;
+      label{
+        margin-right: 10px;
       }
+      button{
+        background-color: #55a8fd;
+        border: none;
+        color:#ffffff;
+        margin-left: 8px;
+      }
+    }
+    .btn-submit{
+      text-align: right;
+      button{
+        background-color: #525874;
+        border:none;
+        color:#ffffff;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-size: 18px;
+        margin: 20px 20px;
+      }
+    }
+
+  }
+  .result{
+    // border: 1px solid #55a8fd;
+    float:left;
+    height:100%;
+    width: 50%;
+    padding:10px 10px;
+    text-align: center;
+    .result-heading{
+      font-weight: 700;
     }
   }
 
 }
 
 .modal {
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    height: 100%; /* Full height */
     left: 0;
+    overflow: auto; /* Enable scroll if needed */
+    position: fixed; /* Stay in place */
     top: 0;
     width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
+    z-index: 1; /* Sit on top */
+    .modal-content {
+        background-color: #fefefe;
+        border: 1px solid #888;
+        margin: 15% auto; /* 15% from the top and centered */
+        // padding: 20px;
+        text-align: center;
+        width: 40%; /* Could be more or less, depending on screen size */
+        .model-form-fields{
+          margin-top: 10px;
+          label{
+            display: inline-block;;
+            margin-right: 20px;
+            text-align: left;
+            width: 150px;
+          }
+          input{
+            // float: right;
+          }
+        }
+        button{
+          background-color: #55a8fd;
+          border:none;
+          color:#ffffff;
+          margin-top: 10px;
+          margin-bottom: 10px;
+          padding: 10px 10px
 
-/* Modal Content/Box */
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-}
-
-/* The Close Button */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 10px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+        }
+        .modal-Heading{
+          background-color: #3a3d62;
+          color:#fff;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          font-size: 20;
+          font-weight: 700;
+        }
+    }
 }
