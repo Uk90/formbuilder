@@ -63,6 +63,7 @@ var resultTextArea = textareaElm.cloneNode(false);
 
 var divForm = document.createElement("form");
 divForm.setAttribute("class", "dynamic-form");
+divForm.setAttribute("name", "dynamicform");
 divForm.setAttribute("id", "dynamicform");
 divContent.appendChild(divForm);
 var divFormInput = createDiv('form-input', '', divSidePanel,'');
@@ -357,6 +358,7 @@ window.onclick = function(event) {
 function objectifyForm(formArray) {
   try {
     var returnArray = [];
+    var formName = formArray.name;
     console.log(formArray.length);
     for (var i = 0; i < formArray.length; i++) {
       var formList = formArray[i];
@@ -384,11 +386,14 @@ function objectifyForm(formArray) {
         returnArray.push(formDetails);
       }
     }
-    var pretty = JSON.stringify(returnArray, undefined, 4);
+    var jsonOutputform = {
+      'formName':formName,
+    }
+    jsonOutputform.formValue = returnArray;
+    var prettyJson = JSON.stringify(jsonOutputform, undefined, 4);
     var jsonresultArea = document.getElementById('resultArea');
         jsonresultArea.style.display = "block";
-        jsonresultArea.value = pretty;
-    // divResultContent.innerHTML = JSON.stringify(pretty);
+        jsonresultArea.value = prettyJson;
     download('test.txt', pretty);
 
   } catch (e) {
