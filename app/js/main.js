@@ -5,166 +5,136 @@ var inputElm = document.createElement("input");
 var textareaElm = document.createElement("textarea");
 var selectElm = document.createElement("select");
 
-var div_container = divElm.cloneNode(false);
-div_container.setAttribute("class", "container");
-document.body.appendChild(div_container);
+var createDiv = function(classes, elemId, apndElem, apndNode) {
+  var divCreateElm = divElm.cloneNode(false);
+  divCreateElm.setAttribute("class", classes);
+  divCreateElm.setAttribute("id", elemId);
+  divCreateElm.appendChild(document.createTextNode(apndNode));
+  apndElem.appendChild(divCreateElm);
+  return divCreateElm;
+}
+var createBtn = function(classes, elemId, iconClass, apndElem, apndNode) {
+  var btnCreateElm = btnElm.cloneNode(false);
+  btnCreateElm.setAttribute("type", "button");
+  btnCreateElm.setAttribute("class", classes);
+  var iDownload = document.createElement('i');
+        iDownload.setAttribute('class', iconClass);
+        // apndElem.insertBefore(iDownload, btnCreateElm);
+        btnCreateElm.appendChild(iDownload);
+        btnCreateElm.appendChild(document.createTextNode(apndNode));
+  apndElem.appendChild(btnCreateElm);
+  return btnCreateElm;
 
-var div_side_panel = divElm.cloneNode(false);
-div_side_panel.setAttribute("class", "side-panel");
-div_container.appendChild(div_side_panel);
+}
 
-var div_content = divElm.cloneNode(false);
-div_content.setAttribute("class", "content");
-div_container.appendChild(div_content);
+var createInput = function(type, elemId, elemValue, dataType, apndElem) {
+  var inputCreateElm = inputElm.cloneNode(false);
+  inputCreateElm.type = type;
+  inputCreateElm.id = elemId;
+  inputCreateElm.value = elemValue;
+  inputCreateElm.setAttribute("data-type", dataType);
+  apndElem.appendChild(inputCreateElm);
+  return inputCreateElm;
+}
+var divContainer = createDiv('container', '', document.body,'');
+var header = document.createElement("header");
+    divContainer.appendChild(header);
 
-var div_content_heading = divElm.cloneNode(false);
-div_content_heading.setAttribute("class", "content-heading");
-div_content_heading.innerHTML = 'Form Fields';
-div_content.appendChild(div_content_heading);
+var divHeaderContainer = createDiv('header-container', '', header,'');
+var divHeaderheading = createDiv('header-heading', '', divHeaderContainer,'');
+var headerContent = document.createElement("h3");
+    headerContent.appendChild(document.createTextNode('Form Builder'));
+    divHeaderheading.appendChild(headerContent);
 
-var div_result = divElm.cloneNode(false);
-div_result.setAttribute("class", "result");
-div_container.appendChild(div_result);
+var divSidePanel = createDiv('side-panel', '', divContainer,'Select a field');
+var divContent = createDiv('content', '', divContainer,'');
+var divContentHeading = createDiv('content-heading', '', divContent,'Form Fields');
+var divResult = createDiv('result', '', divContainer,'');
+var divResultHeading = createDiv('result-heading', '', divResult,'Result');
+var divResultContent = createDiv('result-content', '', divResult,'');
+// var divResultContent = createDiv('result-content', '', divResult,'');
 
-var div_result_heading = divElm.cloneNode(false);
-div_result_heading.setAttribute("class", "result-heading");
-div_result_heading.innerHTML = 'Result';
-div_result.appendChild(div_result_heading);
+var resultTextArea = textareaElm.cloneNode(false);
+    resultTextArea.setAttribute("id", 'resultArea');
+    resultTextArea.setAttribute("cols", '80');
+    resultTextArea.setAttribute("rows", '20');
+    resultTextArea.style.display = "none";
+    divResultContent.appendChild(resultTextArea);
 
-var div_result_content = divElm.cloneNode(false);
-div_result_content.setAttribute("class", "result-content");
-div_result.appendChild(div_result_content);
-
-var div_form = document.createElement("form");
-div_form.setAttribute("id", "dynamicform");
-div_content.appendChild(div_form);
-
-
-var div_form_input = divElm.cloneNode(false);
-div_form_input.setAttribute("class", "form-input");
-div_side_panel.appendChild(div_form_input);
-
-var div_button = divElm.cloneNode(false);
-div_button.setAttribute("class", "btn-submit");
-div_form.appendChild(div_button);
-
-var submit_form_button = btnElm.cloneNode(false);
-var submit_form_label = document.createTextNode("Convert to jSON");
-submit_form_button.setAttribute("type", "button");
-submit_form_button.setAttribute("class", "edit-form-input btn-covert");
-submit_form_button.setAttribute("onclick", "objectifyForm(dynamicform)");
-submit_form_button.appendChild(submit_form_label);
-div_button.appendChild(submit_form_button);
+var divForm = document.createElement("form");
+divForm.setAttribute("class", "dynamic-form");
+divForm.setAttribute("id", "dynamicform");
+divContent.appendChild(divForm);
+var divFormInput = createDiv('form-input', '', divSidePanel,'');
+var divButton = createDiv('btn-submit', '', divForm,'');
+var submitFormButton = createBtn('edit-form-input btn-covert', '', 'fa fa-download', divButton, 'Convert to jSON');
+submitFormButton.setAttribute("onclick", "objectifyForm(dynamicform)");
 
 ///////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////sidePanalFields//////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
-var sidePanalFields = function(label, attrfn, id) {
+var sidePanalFields = function(label, attrfn, id, icon) {
   try {
-    var select_button = btnElm.cloneNode(false);
-    var select_label = document.createTextNode(label);
-    select_button.setAttribute("class", "create_form_element");
-    submit_form_button.setAttribute("type", "button");
-    select_button.setAttribute("onclick", "createFormElement('" + attrfn + "')");
-    select_button.appendChild(select_label);
-    div_form_input.appendChild(select_button);
+
+    var selectButton = createBtn('create-form-element', '', icon, divFormInput, label);
+    selectButton.setAttribute("onclick", "createFormElement('" + attrfn + "')");
   } catch (e) {
     console.log(e);
   }
 }
-sidePanalFields('Text', 'text');
-sidePanalFields('Text Area', 'textarea');
-sidePanalFields('Checkbox', 'checkbox');
-sidePanalFields('Radio', 'radio');
-sidePanalFields('Select', 'select');
-var div_modal = divElm.cloneNode(false);
-div_modal.setAttribute("class", "modal");
-div_modal.setAttribute("id", "myModal");
-document.body.appendChild(div_modal);
-
-var div_modal_content = divElm.cloneNode(false);
-div_modal_content.setAttribute("class", "modal-content");
-div_modal.appendChild(div_modal_content);
-
-var div_modal_Heading = divElm.cloneNode(false);
-div_modal_Heading.setAttribute("class", "modal-Heading");
-div_modal_Heading.innerHTML = 'Edit Form';
-div_modal_content.appendChild(div_modal_Heading);
-
-var label_default_name = document.createElement("label");
-
+sidePanalFields('Text', 'text', '', 'fa fa-text-width');
+sidePanalFields('Text Area', 'textarea', '', 'fa fa-pencil-square-o');
+sidePanalFields('Checkbox', 'checkbox', '', 'fa fa-check-square-o');
+sidePanalFields('Radio', 'radio', '', 'fa fa-circle-o');
+sidePanalFields('Select', 'select', '', 'fa fa-th-list');
+var divModal = createDiv('modal', 'myModal', document.body,'');
+var divModalContent = createDiv('modal-content', '', divModal,'');
+var divModalHeading = createDiv('modal-Heading', '', divModalContent,'Edit Form');
+var labelDefaultName = document.createElement("label");
 
 var createFormElement = function(type) {
   try {
     var element = type;
-    var input_field = '';
-
-    var div_form_fields = divElm.cloneNode(false);
-    div_form.insertBefore(div_form_fields, div_button);
-    div_form_fields.setAttribute("class", "form-fields");
-
-    var label_name = label_default_name.cloneNode(true);
-    var label_default_value = document.createTextNode(type.charAt(0).toUpperCase() + type.slice(1) + ' :');
-    label_name.appendChild(label_default_value);
-    div_form_fields.appendChild(label_name);
-
+    var inputField = '';
+    var divFormFields = divElm.cloneNode(false);
+    divForm.insertBefore(divFormFields, divButton);
+    divFormFields.setAttribute("class", "form-fields");
+    var labelName = labelDefaultName.cloneNode(true);
+    var labelDefaultValue = document.createTextNode(type.charAt(0).toUpperCase() + type.slice(1) + ' :');
+    labelName.appendChild(labelDefaultValue);
+    divFormFields.appendChild(labelName);
     if (element === 'text' || element === 'checkbox') {
-      input_field = inputElm.cloneNode(false);
-      input_field.type = element;
-      input_field.setAttribute("data-type", element);
-      div_form_fields.appendChild(input_field);
-
-
-
+        inputField = createInput(element, '', '',element, divFormFields);
     } else if (element === 'textarea') {
-      input_field = textareaElm.cloneNode(false);
-      input_field.setAttribute("data-type", element);
-      div_form_fields.appendChild(input_field);
+      inputField = textareaElm.cloneNode(false);
+      inputField.setAttribute("data-type", element);
+      divFormFields.appendChild(inputField);
     } else if (element === 'select') {
-      input_field = selectElm.cloneNode(false);
-      input_field.setAttribute("data-type", element);
-      div_form_fields.appendChild(input_field);
-      var option_field = document.createElement("option");
-      option_field.value = '';
-      option_field.text = 'select value';
-      input_field.appendChild(option_field);
+      inputField = selectElm.cloneNode(false);
+      inputField.setAttribute("data-type", element);
+      divFormFields.appendChild(inputField);
+      var optionField = document.createElement("option");
+      optionField.value = '';
+      optionField.text = 'select value';
+      inputField.appendChild(optionField);
     } else if (element === 'radio') {
-      var radio_label = document.createElement("label");
-      input_field = inputElm.cloneNode(false);
-      input_field.type = element;
-      input_field.setAttribute("data-type", element);
-      div_form_fields.appendChild(radio_label);
-      radio_label.appendChild(input_field);
-
-      var radio_label2 = document.createElement("label");
-      var input_field2 = inputElm.cloneNode(false);
-      input_field2.type = element;
-      input_field2.setAttribute("data-type", "radio");
-      div_form_fields.appendChild(radio_label2);
-      radio_label2.appendChild(input_field2);
+      var radioLabel = document.createElement("label");
+      inputField = createInput(element, '', '',element, radioLabel);
+      divFormFields.appendChild(radioLabel);
+      radioLabel.appendChild(inputField);
+      var radioLabel2 = document.createElement("label");
+      var inputField2 = createInput(element, '', '',element, radioLabel2);
+      divFormFields.appendChild(radioLabel2);
+      radioLabel2.appendChild(inputField2);
     }
-
-    var edit_button = btnElm.cloneNode(false);
-    var edit_label = document.createTextNode("Edit");
-    edit_button.setAttribute("class", "edit-form-input");
-    edit_button.setAttribute("type", "button");
-    edit_button.setAttribute("onclick", "editFormAttr()");
-    edit_button.appendChild(edit_label);
-    div_form_fields.appendChild(edit_button);
-
-    var delete_button = btnElm.cloneNode(false);
-    var delete_label = document.createTextNode("Delete");
-    delete_button.setAttribute("class", "edit-form-input");
-    delete_button.setAttribute("type", "button");
-    delete_button.setAttribute("onclick", "deleteFields()");
-    delete_button.appendChild(delete_label);
-    div_form_fields.appendChild(delete_button);
-
+    var editButton = createBtn('edit-form-input', '', 'fa fa-pencil', divFormFields, '');
+    editButton.setAttribute("onclick", "editFormAttr()");
+    var deleteButton = createBtn('edit-form-input', '', 'fa fa-times', divFormFields, '');
+    deleteButton.setAttribute("onclick", "deleteFields()");
   } catch (e) {
     console.log(e);
   }
 }
-
 
 function editFormAttr() {
   try {
@@ -173,14 +143,13 @@ function editFormAttr() {
     if (field.localName === 'label') {
       field = field.firstChild;
     }
-    var div_modal = document.getElementById('myModal');
-    div_modal.style.display = "block";
+    var divModal = document.getElementById('myModal');
+    divModal.style.display = "block";
     constructTextForm(field.dataset.type, activeEvent)
   } catch (e) {
     console.log(e);
   }
 }
-
 function deleteFields() {
   try {
     var activeEvent = document.activeElement;
@@ -196,7 +165,7 @@ var constructTextForm = function(type, activeEvent) {
       var label1 = field;
       field = label1.firstChild;
       var label2 = label1.previousSibling;
-      field2 = label2.firstChild;
+      var field2 = label2.firstChild;
     }
     var placeHolderValue = field.placeholder || '';
     var labelValue = field.dataset.labelName || '';
@@ -209,7 +178,6 @@ var constructTextForm = function(type, activeEvent) {
 
     if (type == 'select') {
       var options = field.options;
-
       for (var k = 0; k < field.options.length; k++) {
         if (options[k].innerText !== 'select value') {
           if (k > 0) {
@@ -220,40 +188,33 @@ var constructTextForm = function(type, activeEvent) {
       }
     }
     if (type == 'radio') {
-      labelValue = field.dataset.radioLabelName || '';
-      labelValue1 = field.dataset.labelName || '';
-      labelValue2 = field2.dataset.labelName || '';
+      var labelValue = field.dataset.radioLabelName || '';
+      var labelValue1 = field.dataset.labelName || '';
+      var labelValue2 = field2.dataset.labelName || '';
     }
-    if (type !== 'select')
+    if (type === 'text' || type === 'textarea')
       modalFormCreate('Placeholder :', 'placeholderValue', placeHolderValue)
-    modalFormCreate('Label Name :', 'labelValue', labelValue)
-    modalFormCreate('Class :', 'classValue', classvalue)
+      modalFormCreate('Label Name :', 'labelValue', labelValue)
+      modalFormCreate('Class :', 'classValue', classvalue)
     if (type !== 'radio')
       modalFormCreate('ID :', 'idValue', idValue)
-    modalFormCreate('Name :', 'nameValue', nameValue)
-
+      modalFormCreate('Name :', 'nameValue', nameValue)
     if (type === 'textarea') {
       modalFormCreate('Col No:', 'colNo', colsValue)
       modalFormCreate('Row No:', 'rowNo', rowsValue)
     }
-
     if (type === 'radio') {
       modalFormCreate('Radio Label 1:', 'radLable1', labelValue1)
       modalFormCreate('Radio Label 2:', 'radLable2', labelValue2)
     }
     if (type === 'select') {
       modalFormCreate('Options:', 'option', optionValue)
-
     }
-    var modal_div_button = divElm.cloneNode(false);
-    div_modal_content.appendChild(modal_div_button);
-    var modal_button = btnElm.cloneNode(false);
-    var button_label = document.createTextNode("Submit");
-    modal_button.appendChild(button_label);
-    modal_button.setAttribute("type", "button");
-    modal_div_button.appendChild(modal_button);
+    var modalDivButton = createDiv('', '', divModalContent,'');
+
+    var modalButton = createBtn('model-form-fields', '', 'fa fa-download', modalDivButton, 'Submit');
     var randomNo = Math.floor((Math.random() * 50000) + 1);
-    modal_button.setAttribute("onclick", "formOverRide(" + randomNo + ")");
+    modalButton.setAttribute("onclick", "formOverRide(" + randomNo + ")");
     activeEvent.setAttribute("id", randomNo);
 
 
@@ -264,20 +225,14 @@ var constructTextForm = function(type, activeEvent) {
 
 var modalFormCreate = function(labelName, inputId, value) {
   try {
-    var modal_div_placeholder = divElm.cloneNode(false);
-    modal_div_placeholder.setAttribute("class", "model-form-fields");
-    div_modal_content.appendChild(modal_div_placeholder);
+    var modalDivPlaceholder = createDiv('model-form-fields', '', divModalContent,'');
 
-    var placeholder_label_name = document.createElement("label");
-    var placeholder_label = document.createTextNode(labelName);
-    placeholder_label_name.appendChild(placeholder_label);
-    modal_div_placeholder.appendChild(placeholder_label_name);
+    var placeholderLabelName = document.createElement("label");
+    var placeholderLabel = document.createTextNode(labelName);
+    placeholderLabelName.appendChild(placeholderLabel);
+    modalDivPlaceholder.appendChild(placeholderLabelName);
 
-    var placeholder_input_field = inputElm.cloneNode(false);
-    placeholder_input_field.type = 'text';
-    placeholder_input_field.id = inputId;
-    placeholder_input_field.value = value;
-    modal_div_placeholder.appendChild(placeholder_input_field);
+    var placeholderInputField = createInput('text', inputId, value, '', modalDivPlaceholder);
   } catch (e) {
     console.log(e);
   }
@@ -292,7 +247,7 @@ var formOverRide = function(radNo) {
       field = radLabel1.firstChild;
     }
     var fieldType = field.dataset.type;
-    if (fieldType !== 'select')
+    if (fieldType === 'text' || fieldType === 'textarea')
       var placeholderValue = document.getElementById('placeholderValue').value;
     var labelValue = document.getElementById('labelValue').value;
     var classValue = document.getElementById('classValue').value;
@@ -340,7 +295,8 @@ var formOverRide = function(radNo) {
           field.setAttribute("data-radio-label-name", labelValue);
         radLabel1.innerHTML = '';
         radLabel1.appendChild(field);
-        radLabel1.innerHTML += radLableName1;
+
+        radLabel1.appendChild(document.createTextNode(radLableName1));
       }
       if (radLableName2) {
         field2.setAttribute("data-label-name", radLableName2);
@@ -348,7 +304,7 @@ var formOverRide = function(radNo) {
           field2.setAttribute("data-radio-label-name", labelValue);
         radLabel2.innerHTML = '';
         radLabel2.appendChild(field2);
-        radLabel2.innerHTML += radLableName2;
+        radLabel2.appendChild(document.createTextNode(radLableName2));
       }
     }
     if (fieldType === 'select') {
@@ -356,8 +312,8 @@ var formOverRide = function(radNo) {
       var aOption = option.split(",");
       field.innerHTML = '';
       for (var i = 0; i < aOption.length; i++) {
-        // console.log(aOption[i]);
         var option = document.createElement("option");
+        field.setAttribute("class", 'select-options');
         option.value = aOption[i];
         option.text = aOption[i];
         field.appendChild(option);
@@ -372,8 +328,11 @@ var formOverRide = function(radNo) {
         field2.setAttribute("data-radio-label-name", labelValue);
       }
     }
-    div_modal.style.display = "none";
-    div_modal_content.innerHTML = '';
+    divModal.style.display = "none";
+    var formElements = divModalContent.getElementsByClassName("model-form-fields");
+    while (formElements[0]) {
+        formElements[0].parentNode.removeChild(formElements[0]);
+    }
 
   } catch (e) {
     console.log(e);
@@ -382,10 +341,13 @@ var formOverRide = function(radNo) {
 
 window.onclick = function(event) {
   try {
-    var div_modal = document.getElementById('myModal');
-    if (event.target == div_modal) {
-      div_modal.style.display = "none";
-      div_modal_content.innerHTML = '';
+    var divModal = document.getElementById('myModal');
+    if (event.target == divModal) {
+      divModal.style.display = "none";
+      var formElements = divModalContent.getElementsByClassName("model-form-fields");
+      while (formElements[0]) {
+          formElements[0].parentNode.removeChild(formElements[0]);
+      }
     }
   } catch (e) {
     console.log(e);
@@ -394,38 +356,26 @@ window.onclick = function(event) {
 
 function objectifyForm(formArray) {
   try {
-
-    //serialize data function
     var returnArray = [];
     console.log(formArray.length);
     for (var i = 0; i < formArray.length; i++) {
-
-      if (formArray[i]['classList'][0] !== "edit-form-input") {
+      var formList = formArray[i];
+      if (formList['classList'][0] !== "edit-form-input") {
         var formDetails = {
-          'type': '',
-          'id': '',
-          'name': '',
-          'class': '',
-          'placeholder': '',
-          'labelName': '',
+          'type': formList.type || '',
+          'id': formList.id || '',
+          'name': formList.name || '',
+          'class': formList.className || '',
+          'placeholder': formList.placeholder || '',
+          'labelName': formList.dataset.labelName || '',
           'options': [],
-          'colNo': '',
-          'rowNo': '',
-          'radioLabelName': ''
+          'colNo': formList.cols || '',
+          'rowNo': formList.rows || '',
+          'radioLabelName': formList.dataset.radioLabelName || ''
         }
-        formDetails.type = formArray[i].type || '';
-        formDetails.id = formArray[i].id || '';
-        formDetails.name = formArray[i].name || '';
-        formDetails.class = formArray[i].className || '';
-        formDetails.placeholder = formArray[i].placeholder || '';
-        formDetails.labelName = formArray[i].dataset.labelName || '';
-        formDetails.colNo = formArray[i].cols || '';
-        formDetails.rowNo = formArray[i].rows || '';
-        formDetails.radioLabelName = formArray[i].dataset.radioLabelName || '';
-        if (formArray[i].type == 'select-one') {
-          var options = formArray[i].options;
-          var optLenth = options.length;
-          for (var j = 0; j < optLenth; j++) {
+        if (formList.type == 'select-one') {
+          var options = formList.options;
+          for (var j = 0; j < options.length; j++) {
             if (options[j].innerText !== 'select value') {
               formDetails.options.push(options[j].innerText)
             }
@@ -434,10 +384,13 @@ function objectifyForm(formArray) {
         returnArray.push(formDetails);
       }
     }
-    var result = JSON.stringify(returnArray);
-    div_result_content.innerHTML = ;;
-    download('test.txt', returnArray);
-    return returnArray;
+    var pretty = JSON.stringify(returnArray, undefined, 4);
+    var jsonresultArea = document.getElementById('resultArea');
+        jsonresultArea.style.display = "block";
+        jsonresultArea.value = pretty;
+    // divResultContent.innerHTML = JSON.stringify(pretty);
+    download('test.txt', pretty);
+
   } catch (e) {
     console.log(e);
   }

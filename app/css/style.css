@@ -1,3 +1,20 @@
+.form-input-size, .container .content .dynamic-form .form-fields textarea, .container .content .dynamic-form .form-fields select, .container .content .dynamic-form .form-fields input[type='text'] {
+  height: 25px;
+  width: 100%; }
+
+.form-input-size-hover, .container .content .dynamic-form .form-fields:hover input[type='text'], .container .content .dynamic-form .form-fields:hover textarea, .container .content .dynamic-form .form-fields:hover select {
+  height: 25px;
+  width: 80%; }
+
+header .header-container {
+  background-color: #ffffff;
+  color: #3c495a;
+  font-size: "";
+  font-weight: "";
+  padding: 10px 0;
+  text-align: center;
+  margin: 0 0 15px 0; }
+
 body {
   background-color: #f0f4f8;
   color: #3c495a;
@@ -5,52 +22,72 @@ body {
 
 .container {
   display: inline;
-  height: 100%;
   width: 100%; }
   .container .side-panel {
-    background-color: #0c3865;
-    border: 1px solid #000000;
+    background-color: #ffffff;
+    color: #3c495a;
+    font-size: 18px;
+    font-weight: 800;
+    border: 1px solid #ab9b9b;
+    text-align: center;
     float: left;
     height: 100%;
-    width: 10%; }
+    width: 21%; }
     .container .side-panel .form-input {
-      padding-bottom: 100px;
-      padding-top: 100px; }
+      padding: 100px 0; }
       .container .side-panel .form-input button {
         background-color: #ffffff;
-        border: none;
-        color: #000000;
+        color: #756f6f;
+        font-size: 15px;
+        font-weight: 800;
+        border: 2px solid #b3acac;
+        border-radius: 10px;
         cursor: pointer;
         height: 30px;
-        margin-top: 5px;
-        width: 100%; }
+        width: 45%;
+        margin: 5px;
+        padding: 5px; }
+        .container .side-panel .form-input button i {
+          margin-right: 5px; }
+        .container .side-panel .form-input button:focus {
+          outline: none; }
   .container .content {
+    border: 2px solid #ab9b9b;
+    background-color: #ffffff;
     float: left;
-    height: 100%;
-    width: 50%; }
-    .container .content .form-fields {
+    height: 340px;
+    width: 50%;
+    overflow: auto;
+    margin-left: 10px; }
+    .container .content .dynamic-form .form-fields {
       margin-top: 20px;
-      margin-left: 50px; }
-      .container .content .form-fields textarea {
-        vertical-align: top; }
-      .container .content .form-fields label {
+      margin-left: 70px;
+      margin-right: 70px;
+      padding: 10px; }
+      .container .content .dynamic-form .form-fields textarea {
+        border-radius: 5px; }
+      .container .content .dynamic-form .form-fields label {
         font-weight: 700;
         margin-right: 10px;
-        min-width: 15%;
+        margin-bottom: 20px;
+        width: 20%;
         display: inline-block; }
-      .container .content .form-fields button {
-        background-color: #55a8fd;
+      .container .content .dynamic-form .form-fields button {
+        background-color: #525874;
+        display: none;
         border: none;
         color: #ffffff;
-        margin-left: 8px;
         float: right;
-        margin-right: 50px;
-        width: 60px; }
-      .container .content .form-fields select {
-        height: 20px;
-        width: 175px; }
+        margin-left: 8px;
+        margin-right: 10px;
+        padding: 5px 7px; }
+      .container .content .dynamic-form .form-fields input[type='text'] {
+        border-radius: 5px; }
+      .container .content .dynamic-form .form-fields:hover {
+        border: 2px dashed #bfb9b9; }
+        .container .content .dynamic-form .form-fields:hover button {
+          display: block; }
     .container .content .btn-submit {
-      border-top: 1px solid #000;
       text-align: right;
       margin-top: 20px; }
       .container .content .btn-submit button {
@@ -61,49 +98,46 @@ body {
         padding-bottom: 5px;
         font-size: 18px;
         margin: 10px 20px; }
+        .container .content .btn-submit button i {
+          margin-right: 5px; }
     .container .content .content-heading {
-      border-bottom: 1px solid #000;
+      border-bottom: 1px solid #ab9b9b;
       font-style: italic;
       font-weight: 700;
       padding: 10px 10px;
       text-align: center; }
   .container .result {
+    background-color: #ffffff;
     float: left;
-    height: 100%;
-    width: 50%;
+    width: 100%;
     padding: 10px 10px;
     text-align: center; }
     .container .result .result-heading {
-      border-bottom: 1px solid #000;
+      border-bottom: 1px solid #ab9b9b;
       font-style: italic;
       font-weight: 700;
       padding: 10px 10px; }
+    .container .result textarea {
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 20px; }
 
 .modal {
   background-color: rgba(0, 0, 0, 0.4);
-  /* Black w/ opacity */
   display: none;
-  /* Hidden by default */
   height: 100%;
-  /* Full height */
+  width: 100%;
   left: 0;
   overflow: auto;
-  /* Enable scroll if needed */
   position: fixed;
-  /* Stay in place */
   top: 0;
-  width: 100%;
-  /* Full width */
-  z-index: 1;
-  /* Sit on top */ }
+  z-index: 1; }
   .modal .modal-content {
-    background-color: #fefefe;
-    border: 1px solid #888;
+    background-color: #ffffff;
+    border: 1px solid #ab9b9b;
     margin: 15% auto;
-    /* 15% from the top and centered */
     text-align: center;
-    width: 40%;
-    /* Could be more or less, depending on screen size */ }
+    width: 40%; }
     .modal .modal-content .model-form-fields {
       margin-top: 10px; }
       .modal .modal-content .model-form-fields label {
@@ -112,16 +146,20 @@ body {
         text-align: left;
         width: 150px; }
     .modal .modal-content button {
-      background-color: #55a8fd;
-      border: none;
+      background-color: #525874;
       color: #ffffff;
+      font-size: 18px;
+      font-weight: 500;
+      border: none;
       margin-top: 10px;
       margin-bottom: 10px;
       padding: 10px 10px; }
+      .modal .modal-content button i {
+        margin-right: 5px; }
     .modal .modal-content .modal-Heading {
       background-color: #3a3d62;
-      color: #fff;
+      color: #ffffff;
+      font-size: 20px;
+      font-weight: 500;
       padding-top: 10px;
-      padding-bottom: 10px;
-      font-size: 20;
-      font-weight: 700; }
+      padding-bottom: 10px; }
