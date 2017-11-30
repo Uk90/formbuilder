@@ -1,3 +1,4 @@
+'use strict'
 var divElm = document.createElement("div");
 var btnElm = document.createElement("button");
 var inputElm = document.createElement("input");
@@ -103,7 +104,7 @@ var createFormElement = function(type) {
     div_form_fields.setAttribute("class", "form-fields");
 
     var label_name = label_default_name.cloneNode(true);
-    var label_default_value = document.createTextNode(type.charAt(0).toUpperCase() + type.slice(1)+' :');
+    var label_default_value = document.createTextNode(type.charAt(0).toUpperCase() + type.slice(1) + ' :');
     label_name.appendChild(label_default_value);
     div_form_fields.appendChild(label_name);
 
@@ -190,70 +191,70 @@ function deleteFields() {
 }
 var constructTextForm = function(type, activeEvent) {
   try {
-      var field = activeEvent.previousSibling;
-      if(type == 'radio'){
-        var label1 = field;
-        field = label1.firstChild;
-        var label2 = label1.previousSibling;
-        field2 = label2.firstChild;
-      }
-      var placeHolderValue = field.placeholder || '';
-      var labelValue  = field.dataset.labelName || '';
-      var nameValue  = field.name || '';
-      var idValue  = field.id || '';
-      var colsValue  = field.cols || '';
-      var rowsValue  = field.rows || '';
-      var optionValue = '';
-      var classvalue = field.className;
+    var field = activeEvent.previousSibling;
+    if (type == 'radio') {
+      var label1 = field;
+      field = label1.firstChild;
+      var label2 = label1.previousSibling;
+      field2 = label2.firstChild;
+    }
+    var placeHolderValue = field.placeholder || '';
+    var labelValue = field.dataset.labelName || '';
+    var nameValue = field.name || '';
+    var idValue = field.id || '';
+    var colsValue = field.cols || '';
+    var rowsValue = field.rows || '';
+    var optionValue = '';
+    var classvalue = field.className;
 
-      if(type == 'select') {
-        var options = field.options;
+    if (type == 'select') {
+      var options = field.options;
 
-        for (var k = 0; k < field.options.length; k++) {
-          if (options[k].innerText !== 'select value') {
-            if(k>0){
-               optionValue += ',';
-            }
-            optionValue += options[k].innerText;
+      for (var k = 0; k < field.options.length; k++) {
+        if (options[k].innerText !== 'select value') {
+          if (k > 0) {
+            optionValue += ',';
           }
+          optionValue += options[k].innerText;
         }
       }
-      if(type == 'radio'){
-        labelValue  = field.dataset.radioLabelName || '';
-        labelValue1 = field.dataset.labelName || '';
-        labelValue2 = field2.dataset.labelName || '';
-      }
-      if (type !== 'select')
-      modalFormCreate('Placeholder :', 'placeholderValue',placeHolderValue)
-      modalFormCreate('Label Name :', 'labelValue', labelValue)
-      modalFormCreate('Class :', 'classValue', classvalue)
-      if (type !== 'radio')
-        modalFormCreate('ID :', 'idValue',idValue)
-      modalFormCreate('Name :', 'nameValue',nameValue)
+    }
+    if (type == 'radio') {
+      labelValue = field.dataset.radioLabelName || '';
+      labelValue1 = field.dataset.labelName || '';
+      labelValue2 = field2.dataset.labelName || '';
+    }
+    if (type !== 'select')
+      modalFormCreate('Placeholder :', 'placeholderValue', placeHolderValue)
+    modalFormCreate('Label Name :', 'labelValue', labelValue)
+    modalFormCreate('Class :', 'classValue', classvalue)
+    if (type !== 'radio')
+      modalFormCreate('ID :', 'idValue', idValue)
+    modalFormCreate('Name :', 'nameValue', nameValue)
 
-      if (type === 'textarea') {
-        modalFormCreate('Col No:', 'colNo',colsValue)
-        modalFormCreate('Row No:', 'rowNo',rowsValue)
-      }
+    if (type === 'textarea') {
+      modalFormCreate('Col No:', 'colNo', colsValue)
+      modalFormCreate('Row No:', 'rowNo', rowsValue)
+    }
 
-      if (type === 'radio') {
-        modalFormCreate('Radio Label 1:', 'radLable1', labelValue1)
-        modalFormCreate('Radio Label 2:', 'radLable2', labelValue2)
-      }
-      if (type === 'select') {
-        modalFormCreate('Options:', 'option',optionValue)
+    if (type === 'radio') {
+      modalFormCreate('Radio Label 1:', 'radLable1', labelValue1)
+      modalFormCreate('Radio Label 2:', 'radLable2', labelValue2)
+    }
+    if (type === 'select') {
+      modalFormCreate('Options:', 'option', optionValue)
 
-      }
-      var modal_div_button = divElm.cloneNode(false);
-      div_modal_content.appendChild(modal_div_button);
-      var modal_button = btnElm.cloneNode(false);
-      var button_label = document.createTextNode("Submit");
-      modal_button.appendChild(button_label);
-      modal_button.setAttribute("type", "button");
-      modal_div_button.appendChild(modal_button);
-      var randomNo = Math.floor((Math.random() * 50000) + 1);
-      modal_button.setAttribute("onclick", "formOverRide(" + randomNo + ")");
-      activeEvent.setAttribute("id", randomNo);
+    }
+    var modal_div_button = divElm.cloneNode(false);
+    div_modal_content.appendChild(modal_div_button);
+    var modal_button = btnElm.cloneNode(false);
+    var button_label = document.createTextNode("Submit");
+    modal_button.appendChild(button_label);
+    modal_button.setAttribute("type", "button");
+    modal_div_button.appendChild(modal_button);
+    var randomNo = Math.floor((Math.random() * 50000) + 1);
+    modal_button.setAttribute("onclick", "formOverRide(" + randomNo + ")");
+    activeEvent.setAttribute("id", randomNo);
 
 
   } catch (e) {
@@ -263,20 +264,20 @@ var constructTextForm = function(type, activeEvent) {
 
 var modalFormCreate = function(labelName, inputId, value) {
   try {
-      var modal_div_placeholder = divElm.cloneNode(false);
-      modal_div_placeholder.setAttribute("class", "model-form-fields");
-      div_modal_content.appendChild(modal_div_placeholder);
+    var modal_div_placeholder = divElm.cloneNode(false);
+    modal_div_placeholder.setAttribute("class", "model-form-fields");
+    div_modal_content.appendChild(modal_div_placeholder);
 
-      var placeholder_label_name = document.createElement("label");
-      var placeholder_label = document.createTextNode(labelName);
-      placeholder_label_name.appendChild(placeholder_label);
-      modal_div_placeholder.appendChild(placeholder_label_name);
+    var placeholder_label_name = document.createElement("label");
+    var placeholder_label = document.createTextNode(labelName);
+    placeholder_label_name.appendChild(placeholder_label);
+    modal_div_placeholder.appendChild(placeholder_label_name);
 
-      var placeholder_input_field = inputElm.cloneNode(false);
-      placeholder_input_field.type = 'text';
-      placeholder_input_field.id = inputId;
-      placeholder_input_field.value = value;
-      modal_div_placeholder.appendChild(placeholder_input_field);
+    var placeholder_input_field = inputElm.cloneNode(false);
+    placeholder_input_field.type = 'text';
+    placeholder_input_field.id = inputId;
+    placeholder_input_field.value = value;
+    modal_div_placeholder.appendChild(placeholder_input_field);
   } catch (e) {
     console.log(e);
   }
@@ -284,95 +285,95 @@ var modalFormCreate = function(labelName, inputId, value) {
 
 var formOverRide = function(radNo) {
   try {
-  var buttonAct = document.getElementById(radNo);
-  var field = buttonAct.previousSibling;
-  if (field.localName === 'label') {
-    var radLabel1 = field;
-    field = radLabel1.firstChild;
-  }
-  var fieldType = field.dataset.type;
-  if (fieldType !== 'select')
-  var placeholderValue = document.getElementById('placeholderValue').value;
-  var labelValue = document.getElementById('labelValue').value;
-  var classValue = document.getElementById('classValue').value;
-  if (fieldType !== 'radio')
-    var idValue = document.getElementById('idValue').value;
-  if (fieldType == 'radio') {
-    var radLableName1 = document.getElementById('radLable1').value;
-    var radLableName2 = document.getElementById('radLable2').value;
-  }
-  var nameValue = document.getElementById('nameValue').value;
-  if (fieldType == 'radio') {
-    var radLabel2 = radLabel1.previousSibling;
-    var field2 = radLabel2.firstChild;
-    var label = radLabel2.previousSibling;
-  } else {
-    var label = field.previousSibling;
-  }
-  var button = buttonAct;
-  if(classValue)
-    field.setAttribute("class", classValue);
-  if (placeholderValue)
-    field.setAttribute("placeholder", placeholderValue);
-  if (idValue)
-    field.setAttribute("id", idValue);
-  if (nameValue)
-    field.setAttribute("name", nameValue);
-  if (fieldType == 'radio') {
-    field2.setAttribute("name", nameValue);
-    field2.setAttribute("class", classValue);
-    field.setAttribute("id", '');
-    field2.setAttribute("id", '');
-  }
-  if (fieldType === 'textarea') {
-    var colNo = document.getElementById('colNo').value;
-    var rowNo = document.getElementById('rowNo').value;
-    if (colNo)
-      field.setAttribute("cols", colNo);
-    if (rowNo)
-      field.setAttribute("rows", rowNo);
-  }
-  if (fieldType === 'radio') {
-    if (radLableName1) {
-      field.setAttribute("data-label-name", radLableName1);
-      if (labelValue)
-        field.setAttribute("data-radio-label-name", labelValue);
-      radLabel1.innerHTML = '';
-      radLabel1.appendChild(field);
-      radLabel1.innerHTML += radLableName1;
+    var buttonAct = document.getElementById(radNo);
+    var field = buttonAct.previousSibling;
+    if (field.localName === 'label') {
+      var radLabel1 = field;
+      field = radLabel1.firstChild;
     }
-    if (radLableName2) {
-      field2.setAttribute("data-label-name", radLableName2);
-      if (labelValue)
-        field2.setAttribute("data-radio-label-name", labelValue);
-      radLabel2.innerHTML = '';
-      radLabel2.appendChild(field2);
-      radLabel2.innerHTML += radLableName2;
+    var fieldType = field.dataset.type;
+    if (fieldType !== 'select')
+      var placeholderValue = document.getElementById('placeholderValue').value;
+    var labelValue = document.getElementById('labelValue').value;
+    var classValue = document.getElementById('classValue').value;
+    if (fieldType !== 'radio')
+      var idValue = document.getElementById('idValue').value;
+    if (fieldType == 'radio') {
+      var radLableName1 = document.getElementById('radLable1').value;
+      var radLableName2 = document.getElementById('radLable2').value;
     }
-  }
-  if (fieldType === 'select') {
-    var option = document.getElementById('option').value;
-    var aOption = option.split(",");
-    field.innerHTML = '';
-    for (var i = 0; i < aOption.length; i++) {
-      // console.log(aOption[i]);
-      var option = document.createElement("option");
-      option.value = aOption[i];
-      option.text = aOption[i];
-      field.appendChild(option);
-    }
-  }
-  if (labelValue) {
-    label.innerHTML = labelValue + ' :';
-    if (fieldType !== 'radio') {
-      field.setAttribute("data-label-name", labelValue);
+    var nameValue = document.getElementById('nameValue').value;
+    if (fieldType == 'radio') {
+      var radLabel2 = radLabel1.previousSibling;
+      var field2 = radLabel2.firstChild;
+      var label = radLabel2.previousSibling;
     } else {
-      field.setAttribute("data-radio-label-name", labelValue);
-      field2.setAttribute("data-radio-label-name", labelValue);
+      var label = field.previousSibling;
     }
-  }
-  div_modal.style.display = "none";
-  div_modal_content.innerHTML = '';
+    var button = buttonAct;
+    if (classValue)
+      field.setAttribute("class", classValue);
+    if (placeholderValue)
+      field.setAttribute("placeholder", placeholderValue);
+    if (idValue)
+      field.setAttribute("id", idValue);
+    if (nameValue)
+      field.setAttribute("name", nameValue);
+    if (fieldType == 'radio') {
+      field2.setAttribute("name", nameValue);
+      field2.setAttribute("class", classValue);
+      field.setAttribute("id", '');
+      field2.setAttribute("id", '');
+    }
+    if (fieldType === 'textarea') {
+      var colNo = document.getElementById('colNo').value;
+      var rowNo = document.getElementById('rowNo').value;
+      if (colNo)
+        field.setAttribute("cols", colNo);
+      if (rowNo)
+        field.setAttribute("rows", rowNo);
+    }
+    if (fieldType === 'radio') {
+      if (radLableName1) {
+        field.setAttribute("data-label-name", radLableName1);
+        if (labelValue)
+          field.setAttribute("data-radio-label-name", labelValue);
+        radLabel1.innerHTML = '';
+        radLabel1.appendChild(field);
+        radLabel1.innerHTML += radLableName1;
+      }
+      if (radLableName2) {
+        field2.setAttribute("data-label-name", radLableName2);
+        if (labelValue)
+          field2.setAttribute("data-radio-label-name", labelValue);
+        radLabel2.innerHTML = '';
+        radLabel2.appendChild(field2);
+        radLabel2.innerHTML += radLableName2;
+      }
+    }
+    if (fieldType === 'select') {
+      var option = document.getElementById('option').value;
+      var aOption = option.split(",");
+      field.innerHTML = '';
+      for (var i = 0; i < aOption.length; i++) {
+        // console.log(aOption[i]);
+        var option = document.createElement("option");
+        option.value = aOption[i];
+        option.text = aOption[i];
+        field.appendChild(option);
+      }
+    }
+    if (labelValue) {
+      label.innerHTML = labelValue + ' :';
+      if (fieldType !== 'radio') {
+        field.setAttribute("data-label-name", labelValue);
+      } else {
+        field.setAttribute("data-radio-label-name", labelValue);
+        field2.setAttribute("data-radio-label-name", labelValue);
+      }
+    }
+    div_modal.style.display = "none";
+    div_modal_content.innerHTML = '';
 
   } catch (e) {
     console.log(e);
@@ -394,49 +395,49 @@ window.onclick = function(event) {
 function objectifyForm(formArray) {
   try {
 
-       //serialize data function
-      var returnArray = [];
-      console.log(formArray.length);
-      for (var i = 0; i < formArray.length; i++) {
+    //serialize data function
+    var returnArray = [];
+    console.log(formArray.length);
+    for (var i = 0; i < formArray.length; i++) {
 
-        if (formArray[i]['classList'][0] !== "edit-form-input") {
-          var formDetails = {
-            'type': '',
-            'id': '',
-            'name': '',
-            'class': '',
-            'placeholder': '',
-            'labelName': '',
-            'options': [],
-            'colNo': '',
-            'rowNo': '',
-            'radioLabelName': ''
-          }
-          formDetails.type = formArray[i].type || '';
-          formDetails.id = formArray[i].id || '';
-          formDetails.name = formArray[i].name || '';
-          formDetails.class = formArray[i].className || '';
-          formDetails.placeholder = formArray[i].placeholder || '';
-          formDetails.labelName = formArray[i].dataset.labelName || '';
-          formDetails.colNo = formArray[i].cols || '';
-          formDetails.rowNo = formArray[i].rows || '';
-          formDetails.radioLabelName = formArray[i].dataset.radioLabelName || '';
-          if (formArray[i].type == 'select-one') {
-            var options = formArray[i].options;
-            var optLenth = options.length;
-            for (var j = 0; j < optLenth; j++) {
-              if (options[j].innerText !== 'select value') {
-                formDetails.options.push(options[j].innerText)
-              }
+      if (formArray[i]['classList'][0] !== "edit-form-input") {
+        var formDetails = {
+          'type': '',
+          'id': '',
+          'name': '',
+          'class': '',
+          'placeholder': '',
+          'labelName': '',
+          'options': [],
+          'colNo': '',
+          'rowNo': '',
+          'radioLabelName': ''
+        }
+        formDetails.type = formArray[i].type || '';
+        formDetails.id = formArray[i].id || '';
+        formDetails.name = formArray[i].name || '';
+        formDetails.class = formArray[i].className || '';
+        formDetails.placeholder = formArray[i].placeholder || '';
+        formDetails.labelName = formArray[i].dataset.labelName || '';
+        formDetails.colNo = formArray[i].cols || '';
+        formDetails.rowNo = formArray[i].rows || '';
+        formDetails.radioLabelName = formArray[i].dataset.radioLabelName || '';
+        if (formArray[i].type == 'select-one') {
+          var options = formArray[i].options;
+          var optLenth = options.length;
+          for (var j = 0; j < optLenth; j++) {
+            if (options[j].innerText !== 'select value') {
+              formDetails.options.push(options[j].innerText)
             }
           }
-          returnArray.push(formDetails);
         }
+        returnArray.push(formDetails);
       }
-      var result = JSON.stringify(returnArray);
-      div_result_content.innerHTML = result;;
-      download('test.txt', returnArray);
-      return returnArray;
+    }
+    var result = JSON.stringify(returnArray);
+    div_result_content.innerHTML = ;;
+    download('test.txt', returnArray);
+    return returnArray;
   } catch (e) {
     console.log(e);
   }
