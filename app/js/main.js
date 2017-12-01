@@ -19,7 +19,6 @@ var createBtn = function(classes, elemId, iconClass, apndElem, apndNode) {
   btnCreateElm.setAttribute("class", classes);
   var iDownload = document.createElement('i');
         iDownload.setAttribute('class', iconClass);
-        // apndElem.insertBefore(iDownload, btnCreateElm);
         btnCreateElm.appendChild(iDownload);
         btnCreateElm.appendChild(document.createTextNode(apndNode));
   apndElem.appendChild(btnCreateElm);
@@ -36,30 +35,42 @@ var createInput = function(type, elemId, elemValue, dataType, apndElem) {
   apndElem.appendChild(inputCreateElm);
   return inputCreateElm;
 }
+
+var createTextArea = function(elemId, cols, rows,dataType, apndElem) {
+  var textAreaElem = textareaElm.cloneNode(false);
+      textAreaElem.setAttribute("id", elemId);
+      textAreaElem.setAttribute("cols", cols);
+      textAreaElem.setAttribute("rows", rows);
+      textAreaElem.setAttribute("data-type", dataType);
+      apndElem.appendChild(textAreaElem);
+  return textAreaElem;
+}
+var createHeading = function(tag, classes, elemText, apndElem) {
+  var headerCnt = document.createElement(tag);
+      headerCnt.setAttribute("class", classes);
+      headerCnt.appendChild(document.createTextNode(elemText));
+      apndElem.appendChild(headerCnt);
+      return headerCnt;
+}
 var divContainer = createDiv('container', '', document.body,'');
 var header = document.createElement("header");
     divContainer.appendChild(header);
 
 var divHeaderContainer = createDiv('header-container', '', header,'');
 var divHeaderheading = createDiv('header-heading', '', divHeaderContainer,'');
-var headerContent = document.createElement("h3");
-    headerContent.appendChild(document.createTextNode('Form Builder'));
-    divHeaderheading.appendChild(headerContent);
+var headerContent = createHeading('h3', '', 'Form Builder', divHeaderheading);
 
-var divSidePanel = createDiv('side-panel', '', divContainer,'Select a field');
+var divSidePanel = createDiv('side-panel', '', divContainer,'');
+var headerContent = createHeading('h3', '', 'Select a field', divSidePanel);
+
 var divContent = createDiv('content', '', divContainer,'');
 var divContentHeading = createDiv('content-heading', '', divContent,'Form Fields');
 var divResult = createDiv('result', '', divContainer,'');
 var divResultHeading = createDiv('result-heading', '', divResult,'Result');
 var divResultContent = createDiv('result-content', '', divResult,'');
-// var divResultContent = createDiv('result-content', '', divResult,'');
 
-var resultTextArea = textareaElm.cloneNode(false);
-    resultTextArea.setAttribute("id", 'resultArea');
-    resultTextArea.setAttribute("cols", '80');
-    resultTextArea.setAttribute("rows", '20');
+var resultTextArea = createTextArea('resultArea', '80', '20','', divResultContent);
     resultTextArea.style.display = "none";
-    divResultContent.appendChild(resultTextArea);
 
 var divForm = document.createElement("form");
 divForm.setAttribute("class", "dynamic-form");
@@ -70,6 +81,7 @@ var divFormInput = createDiv('form-input', '', divSidePanel,'');
 var divButton = createDiv('btn-submit', '', divForm,'');
 var submitFormButton = createBtn('edit-form-input btn-covert', '', 'fa fa-download', divButton, 'Convert to jSON');
 submitFormButton.setAttribute("onclick", "objectifyForm(dynamicform)");
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////sidePanalFields//////////////////////////////////////////////////
@@ -104,12 +116,11 @@ var createFormElement = function(type) {
     var labelDefaultValue = document.createTextNode(type.charAt(0).toUpperCase() + type.slice(1) + ' :');
     labelName.appendChild(labelDefaultValue);
     divFormFields.appendChild(labelName);
+    submitFormButton.style.display = 'inline';
     if (element === 'text' || element === 'checkbox') {
         inputField = createInput(element, '', '',element, divFormFields);
     } else if (element === 'textarea') {
-      inputField = textareaElm.cloneNode(false);
-      inputField.setAttribute("data-type", element);
-      divFormFields.appendChild(inputField);
+      inputField = createTextArea('', '', '',element, divFormFields);
     } else if (element === 'select') {
       inputField = selectElm.cloneNode(false);
       inputField.setAttribute("data-type", element);
@@ -155,6 +166,10 @@ function deleteFields() {
   try {
     var activeEvent = document.activeElement;
     activeEvent.parentNode.remove();
+    var form  = document.getElementById('dynamicform');
+    if(form.length === 1){
+      submitFormButton.style.display = 'none';
+    }
   } catch (e) {
     console.log(e);
   }
